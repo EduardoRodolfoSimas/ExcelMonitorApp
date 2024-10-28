@@ -38,14 +38,14 @@
             // 
             labelResultado.BackColor = Color.Transparent;
             labelResultado.Dock = DockStyle.Fill;
-            labelResultado.Font = new Font("Segoe UI Black", 50F, FontStyle.Bold);
+            labelResultado.Font = new Font("Poppins Medium", 60F);
             labelResultado.ForeColor = Color.FromArgb(174, 247, 99);
             labelResultado.ImageAlign = ContentAlignment.MiddleRight;
             labelResultado.Location = new Point(0, 0);
             labelResultado.Name = "labelResultado";
-            labelResultado.Size = new Size(800, 450);
+            labelResultado.Size = new Size(1382, 801);
             labelResultado.TabIndex = 0;
-            labelResultado.Text = "labelResultado";
+            labelResultado.Text = "Nome";
             labelResultado.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // pictureBox1
@@ -53,10 +53,10 @@
             pictureBox1.BackColor = Color.Transparent;
             pictureBox1.Dock = DockStyle.Bottom;
             pictureBox1.Image = Properties.Resources.ICASA__1_;
-            pictureBox1.Location = new Point(0, 308);
+            pictureBox1.Location = new Point(0, 659);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Padding = new Padding(0, 0, 0, 10);
-            pictureBox1.Size = new Size(800, 142);
+            pictureBox1.Size = new Size(1382, 142);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 1;
             pictureBox1.TabStop = false;
@@ -65,12 +65,12 @@
             // 
             labelContador.BackColor = Color.Transparent;
             labelContador.Dock = DockStyle.Top;
-            labelContador.Font = new Font("Segoe UI Black", 30F);
+            labelContador.Font = new Font("Poppins Medium", 30F);
             labelContador.ForeColor = Color.FromArgb(82, 157, 69);
             labelContador.Location = new Point(0, 0);
             labelContador.Name = "labelContador";
             labelContador.Padding = new Padding(0, 10, 0, 0);
-            labelContador.Size = new Size(800, 81);
+            labelContador.Size = new Size(1382, 81);
             labelContador.TabIndex = 0;
             labelContador.Text = "Contador: 0";
             labelContador.TextAlign = ContentAlignment.MiddleCenter;
@@ -81,7 +81,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = Properties.Resources.backGroundICASA__1_;
             BackgroundImageLayout = ImageLayout.Stretch;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(1382, 801);
             Controls.Add(labelContador);
             Controls.Add(pictureBox1);
             Controls.Add(labelResultado);
