@@ -1,11 +1,15 @@
 using OfficeOpenXml;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace ExcelMonitorApp
 {
     public partial class Form1 : Form
     {
         private string caminhoExcel = @"C:\Users\Granter\Downloads\teste.xlsx";
-        private string ultimoCodigoLido;
         private DateTime ultimaModificacao;
 
         public Form1()
@@ -14,10 +18,9 @@ namespace ExcelMonitorApp
 
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
-
             // Configura o Timer.
             System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
-            timer.Interval = 5000; // Verifica a cada 5 segundos.
+            timer.Interval = 5000; 
             timer.Tick += Timer_Tick;
             timer.Start();
         }
@@ -40,35 +43,32 @@ namespace ExcelMonitorApp
                 using (var pacote = new ExcelPackage(new FileInfo(caminhoExcel)))
                 {
                     ExcelWorksheet planilha = pacote.Workbook.Worksheets[0];
+                    int contador = 0;
+                    string ultimoCodigoLido = null;
 
-
-                    object valorLido = planilha.Cells["A1"].Value;
-                    string codigoLido;
-
-                    if (valorLido is double)
+                    for (int row = 1; row <= planilha.Dimension.End.Row; row++)
                     {
-                        codigoLido = ((double)valorLido).ToString("F0");
-                    }
-                    else
-                    {
-                        codigoLido = valorLido?.ToString();
-                    }
-                    if (!string.IsNullOrEmpty(codigoLido))
-                    {
-                        if (codigoLido != ultimoCodigoLido)
+                        object valorCelula = planilha.Cells[row, 1].Value;
+                        if (valorCelula != null)
                         {
-                            ultimoCodigoLido = codigoLido;
+                            ultimoCodigoLido = valorCelula.ToString();
+                            contador++;
+                        }
+                    }
 
-                            MedicoVeterinario medicoVeterinarioEncontrado = MedicoVeterinario.BuscarMedicoVeterinarioPorCodigo(codigoLido);
+                    labelContador.Text = $"Contador: {contador}";
 
-                            if (medicoVeterinarioEncontrado != null)
-                            {
-                                labelResultado.Text = $"Nome: {medicoVeterinarioEncontrado.Nome}";
-                            }
-                            else
-                            {
-                                labelResultado.Text = "Código não encontrado.";
-                            }
+                    if (!string.IsNullOrEmpty(ultimoCodigoLido))
+                    {
+                        MedicoVeterinario medicoVeterinarioEncontrado = MedicoVeterinario.BuscarMedicoVeterinarioPorCodigo(ultimoCodigoLido);
+
+                        if (medicoVeterinarioEncontrado != null)
+                        {
+                            labelResultado.Text = $"{medicoVeterinarioEncontrado.Nome}";
+                        }
+                        else
+                        {
+                            labelResultado.Text = "Código não encontrado.";
                         }
                     }
                 }
@@ -78,12 +78,34 @@ namespace ExcelMonitorApp
                 MessageBox.Show($"Erro ao verificar a célula do Excel: {ex.Message}");
             }
         }
+        
+        // Configura o F11 para fullscreen
+        private bool bfullscreen = false;
+        private void Form1_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.F11)
+            {
+                if (!bfullscreen)
+                {
+                    this.FormBorderStyle = FormBorderStyle.None;
+                    this.Left = 0;
+                    this.Top = 0;
+                    this.Bounds = Screen.PrimaryScreen.Bounds;
+                    bfullscreen = true;
+                }
+                else
+                {
+                    this.FormBorderStyle = FormBorderStyle.Sizable;
+                    bfullscreen = false;
+                }
+            }
+        }
     }
 
     public class MedicoVeterinario
     {
-        public string? Codigo { get; set; }
-        public string? Nome { get; set; }
+        public string Codigo { get; set; }
+        public string Nome { get; set; }
 
         public static List<MedicoVeterinario> ListaMedicoVeterinario = new List<MedicoVeterinario>
         {
