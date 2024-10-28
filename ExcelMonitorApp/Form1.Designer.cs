@@ -34,16 +34,16 @@
             // labelResultado
             // 
             labelResultado.AutoSize = true;
-            labelResultado.Location = new Point(335, 208);
+            labelResultado.Location = new Point(371, 203);
             labelResultado.Name = "labelResultado";
-            labelResultado.Size = new Size(59, 25);
+            labelResultado.Size = new Size(0, 25);
             labelResultado.TabIndex = 0;
-            labelResultado.Text = "label1";
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.FromArgb(0, 95, 73);
             ClientSize = new Size(800, 450);
             Controls.Add(labelResultado);
             Name = "Form1";
